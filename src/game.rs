@@ -1,5 +1,3 @@
-use super::*;
-
 pub enum TileColor {
     Blue,
     Red,
@@ -31,6 +29,7 @@ pub struct Tile {
 }
 
 pub struct Rack {
+    tiles: Vec<Tile>,
 
 }
 

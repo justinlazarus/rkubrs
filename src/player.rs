@@ -1,6 +1,6 @@
-use super::*;
+use crate::game;
 
 pub struct Player {
     name: String,
-    rack: Rack,
+    rack: game::Rack,
 }

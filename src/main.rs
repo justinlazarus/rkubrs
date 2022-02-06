@@ -1,6 +1,6 @@
-
+mod player;
 mod game;
 
 fn main() {
-    println!("Hello, world!");
+    let tc = game::TileColor::Black;
 }
