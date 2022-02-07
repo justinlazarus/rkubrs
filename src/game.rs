@@ -1,7 +1,8 @@
-pub const MAX_TILE_NUMBER: u8 = 14;
-pub const JOKER_COUNT: u8 = 2;
+use rand::Rng;
+use rand::thread_rng;
 
-//[u8; 15] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+pub const MAX_TILE_NUMBER: u8 = 13;
+pub const JOKER_COUNT: u8 = 2;
 
 
 #[derive(Debug)]
@@ -18,9 +19,6 @@ pub struct Tile {
     number: u8,
 }
 
-impl Tile {
-}
-
 pub struct Rack {
     tiles: Vec<Tile>,
 }
@@ -33,10 +31,30 @@ impl Pool {
     fn new() -> Pool {
         let mut pool = Pool { tiles: Vec::new() };
 
-        for tile_number in 1..MAX_TILE_NUMBER {
+        // Add 2 tiles for each number/color
+
+        for tile_number in 1..(MAX_TILE_NUMBER+1) {
             pool.tiles.push(Tile{ color: TileColor::Black, number: tile_number, });
+            pool.tiles.push(Tile{ color: TileColor::Black, number: tile_number, });
+            pool.tiles.push(Tile{ color: TileColor::Red, number: tile_number, });
+            pool.tiles.push(Tile{ color: TileColor::Red, number: tile_number, });
+            pool.tiles.push(Tile{ color: TileColor::Yellow, number: tile_number, });
+            pool.tiles.push(Tile{ color: TileColor::Yellow, number: tile_number, });
+            pool.tiles.push(Tile{ color: TileColor::Blue, number: tile_number, });
+            pool.tiles.push(Tile{ color: TileColor::Blue, number: tile_number, });
         }
+
         pool
+    }
+
+    fn choose(mut self) -> Tile {
+        self.tiles.swap_remove(
+            thread_rng().gen_range(1, self.tiles.len())
+        )
+    }
+
+    fn draw(mut self) -> Option<Tile> {
+        self.tiles.pop()
     }
 }
 
@@ -51,5 +69,11 @@ pub struct Set {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn check_pool_size() {
+        assert_eq!(Pool::new().tiles.len(), 104)
+    }
+
 
 }
